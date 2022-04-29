@@ -4,7 +4,11 @@ MAINTAINER Niema Moshiri <niemamoshiri@gmail.com>
 
 # install Minigraph
 RUN apk update && \
-    apk add bash && \
-    wget -qO- "https://github.com/lh3/minigraph/releases/download/v0.17/minigraph-0.17_x64-linux.tar.bz2" | tar -jx && \
-    mv minigraph-*/minigraph /usr/local/bin/minigraph && \
+    apk add bash gcc make musl-dev zlib-dev && \
+    wget -qO- "https://github.com/lh3/minigraph/archive/refs/tags/v0.17.tar.gz" | tar -zx && \
+    cd minigraph-* && \
+    make && \
+    chmod a+x minigraph && \
+    mv minigraph /usr/local/bin/minigraph && \
+    cd .. && \
     rm -rf minigraph-*
